@@ -28,11 +28,17 @@ namespace AsterNET.WinForm
 
 			btnConnect.Enabled = false;
 			manager = new ManagerConnection(address, port, user, password);
-            manager.NewState += Manager_NewState;
-            
-			// manager.UnhandledEvent += new EventHandler<ManagerEvent>(manager_Events);
-			try
-			{
+            //  manager.NewState += Manager_NewState; => OK
+            //  manager.PeerStatus += Manager_PeerStatus;
+            //  manager.AgentsComplete += Manager_AgentsComplete;
+            //  manager.Agents += Manager_Agents;
+            //  manager.AgentRingNoAnswer += Manager_AgentRingNoAnswer;
+            //  manager.DeviceStateChanged += Manager_DeviceStateChanged; => OK
+            manager.DialEnd += Manager_DialEnd;
+
+            // manager.UnhandledEvent += new EventHandler<ManagerEvent>(manager_Events);
+            try
+            {
 				// Uncomment next 2 line comments to Disable timeout (debug mode)
 				// manager.DefaultResponseTimeout = 0;
 				// manager.DefaultEventTimeout = 0;
@@ -47,19 +53,44 @@ namespace AsterNET.WinForm
 			btnDisconnect.Enabled = true;
 		}
 
-        private void Manager_NewState(object sender, NewStateEvent e)
+        private void Manager_DialEnd(object sender, DialEndEvent e)
         {
-            string state = e.State;
-            string callerID = e.CallerId;
             this.UIThread(() => {
 
-                this.rtLog.AppendText($"{DateTime.Now} - {callerID} - {state} " + System.Environment.NewLine);                                
+                this.rtLog.AppendText($"================================================================================================== " + System.Environment.NewLine);
+                this.rtLog.AppendText($"{DateTime.Now} " + System.Environment.NewLine);
+                this.rtLog.AppendText($"e: {Newtonsoft.Json.JsonConvert.SerializeObject(e)}");
+                this.rtLog.AppendText(System.Environment.NewLine);
+
+            });
+        }
+
+        private void Manager_DeviceStateChanged(object sender, DeviceStateChangeEvent e)
+        {
+            this.UIThread(() => {
+
+                this.rtLog.AppendText($"================================================================================================== " + System.Environment.NewLine);
+                this.rtLog.AppendText($"{DateTime.Now} " + System.Environment.NewLine);
+                this.rtLog.AppendText($"e: {Newtonsoft.Json.JsonConvert.SerializeObject(e)}");
+                this.rtLog.AppendText(System.Environment.NewLine);
+
+            });
+        }
+
+        private void Manager_NewState(object sender, NewStateEvent e)
+        {
+
+            this.UIThread(() => {
+
+                this.rtLog.AppendText($"================================================================================================== " + System.Environment.NewLine);
+                this.rtLog.AppendText($"{DateTime.Now} " + System.Environment.NewLine);
                 this.rtLog.AppendText($"e: {Newtonsoft.Json.JsonConvert.SerializeObject(e)}");
                 this.rtLog.AppendText(System.Environment.NewLine);
 
             });
 
-            return;
+            /*
+             
             if ((state == "Ringing") | (e.ChannelState == "5"))
             {
                 String connectedLineNum;
@@ -93,6 +124,10 @@ namespace AsterNET.WinForm
 
                 // human lifted up the phone right now
             }
+             
+             
+             */
+
         }
 
         void manager_Events(object sender, ManagerEvent e)
