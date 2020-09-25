@@ -28,13 +28,16 @@ namespace AsterNET.WinForm
 
 			btnConnect.Enabled = false;
 			manager = new ManagerConnection(address, port, user, password);
-            //  manager.NewState += Manager_NewState; => OK
+            manager.NewState += Manager_NewState; // => OK
             //  manager.PeerStatus += Manager_PeerStatus;
             //  manager.AgentsComplete += Manager_AgentsComplete;
             //  manager.Agents += Manager_Agents;
             //  manager.AgentRingNoAnswer += Manager_AgentRingNoAnswer;
-            //  manager.DeviceStateChanged += Manager_DeviceStateChanged; => OK
-            manager.DialEnd += Manager_DialEnd;
+            //  manager.DeviceStateChanged += Manager_DeviceStateChanged; // => OK
+            //  manager.DialEnd += Manager_DialEnd;
+            //  manager.ConnectionState += Manager_ConnectionState;
+            //  manager.ExtensionStatus += Manager_ExtensionStatus;
+            //  manager.Hangup += Manager_Hangup;
 
             // manager.UnhandledEvent += new EventHandler<ManagerEvent>(manager_Events);
             try
@@ -53,7 +56,7 @@ namespace AsterNET.WinForm
 			btnDisconnect.Enabled = true;
 		}
 
-        private void Manager_DialEnd(object sender, DialEndEvent e)
+        private void Manager_Hangup(object sender, HangupEvent e)
         {
             this.UIThread(() => {
 
