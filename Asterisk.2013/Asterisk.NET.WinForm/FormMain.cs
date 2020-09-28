@@ -28,12 +28,12 @@ namespace AsterNET.WinForm
 
 			btnConnect.Enabled = false;
 			manager = new ManagerConnection(address, port, user, password);
-            manager.NewState += Manager_NewState; // => OK
+            //  manager.NewState += Manager_NewState; // => OK
             //  manager.PeerStatus += Manager_PeerStatus;
             //  manager.AgentsComplete += Manager_AgentsComplete;
             //  manager.Agents += Manager_Agents;
             //  manager.AgentRingNoAnswer += Manager_AgentRingNoAnswer;
-            //  manager.DeviceStateChanged += Manager_DeviceStateChanged; // => OK
+            manager.DeviceStateChanged += Manager_DeviceStateChanged; // => OK
             //  manager.DialEnd += Manager_DialEnd;
             //  manager.ConnectionState += Manager_ConnectionState;
             //  manager.ExtensionStatus += Manager_ExtensionStatus;
