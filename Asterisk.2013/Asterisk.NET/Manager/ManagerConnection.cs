@@ -230,6 +230,10 @@ namespace AsterNET.Manager
         /// </summary>
         public event EventHandler<NewChannelEvent> NewChannel;
         /// <summary>
+        /// A NewChannel is triggered when a channel's connected line information is changed.<br/>
+        /// </summary>
+        public event EventHandler<NewConnectedLineEvent> NewConnectedLine;
+        /// <summary>
         /// A NewExten is triggered when a channel is connected to a new extension.<br/>
         /// </summary>
         public event EventHandler<NewExtenEvent> NewExten;
@@ -546,6 +550,7 @@ namespace AsterNET.Manager
             Helper.RegisterEventHandler(registeredEventHandlers, typeof(MessageWaitingEvent), arg => fireEvent(MessageWaiting, arg));
             Helper.RegisterEventHandler(registeredEventHandlers, typeof(NewCallerIdEvent), arg => fireEvent(NewCallerId, arg));
             Helper.RegisterEventHandler(registeredEventHandlers, typeof(NewChannelEvent), arg => fireEvent(NewChannel, arg));
+            Helper.RegisterEventHandler(registeredEventHandlers, typeof(NewConnectedLineEvent), arg => fireEvent(NewConnectedLine, arg));
             Helper.RegisterEventHandler(registeredEventHandlers, typeof(NewExtenEvent), arg => fireEvent(NewExten, arg));
             Helper.RegisterEventHandler(registeredEventHandlers, typeof(NewStateEvent), arg => fireEvent(NewState, arg));
             Helper.RegisterEventHandler(registeredEventHandlers, typeof(OriginateResponseEvent), arg => fireEvent(OriginateResponse, arg));
